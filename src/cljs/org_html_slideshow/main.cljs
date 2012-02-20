@@ -15,6 +15,7 @@
             [goog.Uri :as Uri]
             [goog.window :as window]
             [one.dispatch :as dispatch]
+            [one.browser.history :as history]
             [domina :as d]))
 
 ;;; GLOBAL STATE
@@ -33,6 +34,8 @@
 (def presenter-window (atom nil))
 
 (def presenter-start-time (atom nil))
+
+(def *HISTORY* (atom nil))
 
 
 ;;; UTILITIES
@@ -71,9 +74,7 @@
   (. (Uri/parse (. js/window -location)) (getFragment)))
 
 (defn set-location-fragment [fragment-id]
-  (let [uri (Uri/parse (. js/window -location))]
-    (. uri (setFragment fragment-id))
-    (set! (. js/window -location) (str uri))))
+  (history/set-token @*HISTORY* fragment-id))
 
 (defn fire-handler [event-id]
   (fn [goog-event]
@@ -482,6 +483,21 @@
   (dispatch/react-to #{:change-mode} (fn [id _] (change-mode)))
   (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window))))
 
+;;; HISTORY
+
+(defn history-handler [{:keys [token type navigation?] :as m}]
+  (info "history-handler" m)
+  (when navigation?
+    (if (= (name token) "")
+      (info "TODO: how to get to initial mode?")
+      (let [{html :html} (slide-from-id (name token))]
+        (set! (. (dom/getElement "current-slide") -innerHTML) html)
+        (show-presenter-slides)))))
+
+(defn install-history-handler []
+  (let [h (history/history history-handler)]
+    (swap! *HISTORY* (constantly h))))
+
 ;;; INITIAL SETUP
 
 (defn init-stylesheets []
@@ -524,6 +540,8 @@
   (info "Installing key handler")
   (install-event-handlers)
   (install-control-panel)
-  (install-keyhandler))
+  (install-keyhandler)
+  (info "Installing history handler")
+  (install-history-handler))
 
 (main)
