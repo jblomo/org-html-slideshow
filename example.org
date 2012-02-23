@@ -89,6 +89,12 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 - Make up your own tags
   - Add them to the CSS file
 
+* Animation                                            :animate:appear:slide:
+- Mark a slide with the =animated= tag
+- And an animation tag
+- Currently only =appear= is supported
+  - Sub-bullets are animated, too
+
 * The End                                                             :slide:
 
 Include the stylesheets and JavaScript at the *bottom* of your Org-Mode file.
