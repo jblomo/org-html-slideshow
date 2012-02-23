@@ -7,16 +7,85 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-02-10 16:25:10 EST"/>
+<meta name="generated" content="2012-02-23 11:12:18 EST"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
-
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  html { font-family: Times, serif; font-size: 12pt; }
+  .title  { text-align: center; }
+  .todo   { color: red; }
+  .done   { color: green; }
+  .tag    { background-color: #add8e6; font-weight:normal }
+  .target { }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .right  {margin-left:auto; margin-right:0px;  text-align:right;}
+  .left   {margin-left:0px;  margin-right:auto; text-align:left;}
+  .center {margin-left:auto; margin-right:auto; text-align:center;}
+  p.verse { margin-left: 3% }
+  pre {
+	border: 1pt solid #AEBDCC;
+	background-color: #F3F5F7;
+	padding: 5pt;
+	font-family: courier, monospace;
+        font-size: 90%;
+        overflow:auto;
+  }
+  table { border-collapse: collapse; }
+  td, th { vertical-align: top;  }
+  th.right  { text-align:center;  }
+  th.left   { text-align:center;   }
+  th.center { text-align:center; }
+  td.right  { text-align:right;  }
+  td.left   { text-align:left;   }
+  td.center { text-align:center; }
+  dt { font-weight: bold; }
+  div.figure { padding: 0.5em; }
+  div.figure p { text-align: center; }
+  div.inlinetask {
+    padding:10px;
+    border:2px solid gray;
+    margin:10px;
+    background: #ffffcc;
+  }
+  textarea { overflow-x: auto; }
+  .linenr { font-size:smaller }
+  .code-highlighted {background-color:#ffff00;}
+  .org-info-js_info-navigation { border-style:none; }
+  #org-info-js_console-label { font-size:10px; font-weight:bold;
+                               white-space:nowrap; }
+  .org-info-js_search-highlight {background-color:#ffff00; color:#000000;
+                                 font-weight:bold; }
+  /*]]>*/-->
+</style>
 <link rel="stylesheet" type="text/css" href="src/css/common.css" />
 <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
 <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
 <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
-
+<script type="text/javascript">
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
 
 </head>
 <body>
@@ -63,7 +132,8 @@
 <li><a href="#sec-4-1">4.1 Org-Mode Tag as CSS Class</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 The End</a></li>
+<li><a href="#sec-5">5 Animation</a></li>
+<li><a href="#sec-6">6 The End</a></li>
 </ul>
 </div>
 </div>
@@ -200,8 +270,8 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 
-<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
-  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span style="color: #00ffff;">defn</span> <span style="color: #87cefa;">example</span> []
+  (<span style="color: #eedd82;">println</span> <span style="color: #ffa07a;">"This is sample source code."</span>))
 </pre>
 
 
@@ -332,8 +402,31 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> Animation &nbsp;&nbsp;&nbsp;<span class="tag"><span class="animate">animate</span>&nbsp;<span class="appear">appear</span>&nbsp;<span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-5">
+
+<ul>
+<li>Mark a slide with the <code>animated</code> tag
+</li>
+<li>And an animation tag
+</li>
+<li>Currently only <code>appear</code> is supported
+<ul>
+<li>Sub-bullets are animated, too
+</li>
+</ul>
+
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-6">
 
 
 <p>
@@ -350,9 +443,9 @@ Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode fil
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-02-10 16:25:10 EST</p>
+<p class="date">Date: 2012-02-23 11:12:18 EST</p>
 <p class="author">Author: Stuart Sierra</p>
-<p class="creator">Org version 7.8.02 with Emacs version 23</p>
+<p class="creator">Org version 7.8.03 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
 
 </div>
