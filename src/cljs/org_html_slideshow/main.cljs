@@ -487,7 +487,7 @@
 ;;; HISTORY
 
 (defn history-handler [{:keys [token type navigation?] :as m}]
-  (info "history-handler" m)
+  (info [:history-handler [:m m]])
   (when navigation?
     (if (= (name token) "")
 
@@ -500,7 +500,7 @@
         (when-not @slideshow-mode?
           (info [:history-handler :enter-slideshow-mode])
           (toggle-mode))
-        (info [:history-handler :set-current-slide])
+        (info [:history-handler :set-current-slide (name token)])
         (set! (. (dom/getElement "current-slide") -innerHTML) html)
         (show-presenter-slides)))))
 
