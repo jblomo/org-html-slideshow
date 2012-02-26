@@ -35,7 +35,7 @@
 
 (def presenter-start-time (atom nil))
 
-(def *HISTORY* (atom nil))
+(def history (atom nil))
 
 
 ;;; UTILITIES
@@ -74,7 +74,7 @@
   (. (Uri/parse (. js/window -location)) (getFragment)))
 
 (defn set-location-fragment [fragment-id]
-  (history/set-token @*HISTORY* fragment-id))
+  (history/set-token @history fragment-id))
 
 (defn fire-handler [event-id]
   (fn [goog-event]
@@ -496,7 +496,7 @@
 
 (defn install-history-handler []
   (let [h (history/history history-handler)]
-    (swap! *HISTORY* (constantly h))))
+    (swap! history (constantly h))))
 
 ;;; INITIAL SETUP
 
