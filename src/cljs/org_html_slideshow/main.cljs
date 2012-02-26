@@ -295,7 +295,8 @@
   (show! (d/by-id "preamble"))
   (show! (d/by-id "content"))
   (show! (d/by-id "postamble"))
-  (. (dom/getElement (location-fragment)) (scrollIntoView)))
+  (when-let [loc-el (dom/getElement (location-fragment))]
+    (. loc-el (scrollIntoView))))
 
 (defn change-mode []
   (if @slideshow-mode?
@@ -489,8 +490,17 @@
   (info "history-handler" m)
   (when navigation?
     (if (= (name token) "")
-      (info "TODO: how to get to initial mode?")
+
+      (when @slideshow-mode?
+        (info [:history-handler :leave-slideshow-mode])
+        ;; leaving slide show mode
+        (toggle-mode))
+
       (let [{html :html} (slide-from-id (name token))]
+        (when-not @slideshow-mode?
+          (info [:history-handler :enter-slideshow-mode])
+          (toggle-mode))
+        (info [:history-handler :set-current-slide])
         (set! (. (dom/getElement "current-slide") -innerHTML) html)
         (show-presenter-slides)))))
 
