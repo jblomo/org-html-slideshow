@@ -495,8 +495,7 @@
         (show-presenter-slides)))))
 
 (defn install-history-handler []
-  (let [h (history/history history-handler)]
-    (swap! history (constantly h))))
+  (reset! history (history/history history-handler)))
 
 ;;; INITIAL SETUP
 
