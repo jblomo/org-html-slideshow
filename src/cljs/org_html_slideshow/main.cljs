@@ -37,6 +37,7 @@
 
 (def history (atom nil))
 
+(def slide-id (atom nil))
 
 ;;; UTILITIES
 
@@ -493,15 +494,20 @@
 
       (when @slideshow-mode?
         (info [:history-handler :leave-slideshow-mode])
-        ;; leaving slide show mode
+        (reset! slide-id nil)
         (toggle-mode))
 
-      (let [{html :html} (slide-from-id (name token))]
+      (let [id (name token)
+            current-id @slide-id
+            {html :html} (slide-from-id id)]
+        (info [:history-handler :id id :current-id current-id])
         (when-not @slideshow-mode?
           (info [:history-handler :enter-slideshow-mode])
           (toggle-mode))
-        (info [:history-handler :set-current-slide (name token)])
-        (set! (. (dom/getElement "current-slide") -innerHTML) html)
+        (when-not (= id current-id)
+          (info [:history-handler :set-current-slide id])
+          (reset! slide-id id)
+          (set! (. (dom/getElement "current-slide") -innerHTML) html))
         (show-presenter-slides)))))
 
 (defn install-history-handler []
