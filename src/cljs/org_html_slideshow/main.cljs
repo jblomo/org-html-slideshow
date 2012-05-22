@@ -322,7 +322,11 @@
 (defn show-next-slide []
   (let [current (current-slide)
         next (second (drop-while #(not= current %) @slides))]
-    (when next (show-slide next))
+    (when next
+      (show-slide next)
+      (when-let [w (get-presenter-window)]
+        (set! (.. w -document (getElementById "presenter-notes-container") -scrollTop)
+              0)))
     (swap! presenter-start-time (fn [t]
                                   (if (nil? t)
                                     (.getTime (js/Date.))
