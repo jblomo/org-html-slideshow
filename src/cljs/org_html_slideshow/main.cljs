@@ -432,10 +432,10 @@
         display-hours (if (< 12 hours) (- hours 12) hours)]
     (set! (. elem -innerHTML)
           (goog.string.format
-           "<span>%d:%02d:%02d<span id=\"presenter-clock-time-ampm\"> %s</span></span>"
+           "<span>%d:%02d<span id=\"presenter-clock-time-ampm\"> %s</span></span>" ;; :%02d
            display-hours
            (. now (getMinutes))
-           (.. now (getSeconds))
+           ;;(.. now (getSeconds))
            (if (<= 12 hours)
              "pm" "am")))))
 
@@ -445,8 +445,9 @@
         mins (mod (/ elapsed (* 60 1000)) 60)
         hours (/ elapsed (* 60 60 1000))]
     (goog.string.format
-     "%d:%02d:%02d"
-     hours mins secs)))
+     "%d:%02d" ;; :%02d
+     hours mins ;; secs
+     )))
 
 (defn update-presenter-elapsed-time [win]
   (let [elem (.. win -document
@@ -454,7 +455,8 @@
     (set! (. elem -innerHTML)
           (if @presenter-start-time
             (elapsed-time-string)
-            "0:00:00")))  )
+            "0:00")) ;; :00
+    ))
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
