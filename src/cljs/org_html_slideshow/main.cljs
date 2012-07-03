@@ -309,11 +309,20 @@
     (let [container (first (dom-tags "div" "slide" slide))
           bullets (first (dom-tags "ul" nil container))
           animation-style (animation-style container)]
-      (when animation-style
-        (reset! animation-state {:state :animating
-                                 :animation-pending (dom-tags "li" nil bullets)
-                                 :animation-done []
-                                 :animation-style animation-style}))))
+      (info "bullets on this page" bullets)
+      (if (and bullets animation-style)
+        (let [items (dom-tags "li" nil bullets)]
+          (info "There are animation items on this page")
+          (reset! animation-state {:state (if (seq items) :animating :done)
+                                   :animation-pending items
+                                   :animation-done []
+                                   :animation-style animation-style})
+          (info "animation state is now" @animation-state))
+        ;; If there's no animation style, we might as well set the
+        ;; animation state to something safe, even though there should
+        ;; never be a way to get past the end of a slide without the
+        ;; state going to :done
+        (reset! animation-state {}))))
   (show-presenter-slides))
 
 
@@ -351,6 +360,7 @@
 (defn animate [state]
   (let [{:keys [animation-pending animation-done]} state
         next-to-animate (first animation-pending)]
+    (info "entering animate with state " state)
     (assoc state 
       :state (if (next animation-pending) :animating :done)
       :animation-pending (next animation-pending)
@@ -389,9 +399,8 @@
       (swap! animation-state animate)
       (do
         (when next
-          (show-slide next)
           ;;(reset! animation-state {})
-          )
+          (show-slide next))
         (swap! presenter-start-time (fn [t]
                                       (if (nil? t)
                                         (.getTime (js/Date.))
