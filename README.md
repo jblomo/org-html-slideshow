@@ -15,6 +15,16 @@ Org-HTML-Slideshow is written in
 [ClojureScript](https://github.com/clojure/clojurescript).
 
 
+Recommended Emacs Platform
+========================================
+
+* [GNU Emacs](http://www.gnu.org/software/emacs/) version 23+
+  * Check version with `M-x emacs-version`
+* [Org-Mode](http://orgmode.org/) version 7+
+  * Check version by opening an .org file and `M-x org-version`
+* [Htmlize](http://www.emacswiki.org/emacs/Htmlize) version 1.37+
+
+
 Using in Your Org-mode Files
 ========================================
 
@@ -58,7 +68,11 @@ headline.
 
 Additional tags will be added as CSS classes on the slides.
 
-Read more about [tags in the Org-Mode manual](http://orgmode.org/manual/Tags.html).
+Read more about [tags](http://orgmode.org/manual/Tags.html)
+in the Org-Mode manual.
+
+See the files `example.org` and `example.html` for more examples of
+things you can do with Org-Mode.
 
 
 Exporting to HTML
@@ -67,7 +81,8 @@ Exporting to HTML
 Type `C-c C-e h` in your .org file to export as HTML. Repeat whenever
 you modify the .org file.
 
-Read more about [HTML export in the Org-Mode manual](http://orgmode.org/manual/HTML-export.html).
+Read more about [HTML export](http://orgmode.org/manual/HTML-export.html)
+in the Org-Mode manual.
 
 
 Playing the Slide Show
@@ -94,9 +109,13 @@ presenter preview" link. This will open a new window showing the
 currently visible slide, upcoming slide, wall clock time, and elapsed
 time since the presentation began.
 
-Even with the presenter preview window open, the main slide show
-window **must** be focused (the "active" window) in order for the
-keyboard commands to work.
+
+Presenter Notes
+--------------------
+
+Add a sub-heading with the tag `:notes:` beneath a `:slide:`
+heading. The content under the notes heading will be displayed in the
+Presenter Preview window with the slide.
 
 
 Changing Styles
@@ -172,9 +191,9 @@ TODO
 * Better stylesheets
 * ? key to display on-screen help
 * click mouse to advance slides
-* Link visible in original document to begin slide show
 * "Slide X of N" display
 * Jump to slide from a list
+* Link visible in original document to begin slide show?
 * Slide transitions?
 * Animation?
 
@@ -185,3 +204,11 @@ Copyright & Contributions
 
 There is no copyright. I dedicate this work to the public domain. If
 you want me to use your fixes/improvements, you must do the same.
+
+
+Contributors
+--------------------
+
+* Stuart Sierra (primary author)
+* Craig Andera
+* Alex Redington

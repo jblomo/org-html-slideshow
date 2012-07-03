@@ -259,14 +259,24 @@
 (defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
     (doseq [elem (dom-tags "div" nil div)]
-      (when (some #(classes/has elem (str "outline-" %)) (range 1 9))
+      (when (and (not )
+                 (some #(classes/has elem (str "outline-" %)) (range 1 9)))
         (remove-elem elem)))
     div))
+
+(defn slide-notes-html [slide-div-elem]
+  (if-let [div (first (filter (fn [elem]
+                                (and (= "DIV" (.-nodeName elem))
+                                     (classes/has elem "notes")))
+                              (.-children slide-div-elem)))]
+    (dom/getOuterHtml div)
+    ""))
 
 (defn get-slides []
   (vec (map (fn [elem]
               {:id  (. (nearest-inside-heading elem) -id)
-               :html (dom/getOuterHtml (remove-nested-sections elem))})
+               :html (dom/getOuterHtml (remove-nested-sections elem))
+               :notes-html (slide-notes-html elem)})
             (dom-tags "div" "slide"))))
 
 (defn slide-from-id [id]
@@ -411,8 +421,8 @@
       (. event (preventDefault))
       (. event (stopPropagation)))))
 
-(defn install-keyhandler []
-  (events/listen (goog.events.KeyHandler. (dom/getDocument))
+(defn install-keyhandler [document]
+  (events/listen (goog.events.KeyHandler. document)
                  goog.events.KeyHandler.EventType.KEY
                  handle-key))
 
@@ -427,19 +437,25 @@
   <body class=\"presenter-display\">
     <div id=\"presenter-slide-preview\">
       <div id=\"presenter-current-slide-container\">
-        <h2 class=\"presenter-label\">Current Slide</h2>
+        <span class=\"presenter-label\">Current Slide</span>
         <div id=\"presenter-current-slide\">
         </div>
       </div>
       <div id=\"presenter-next-slide-container\">
-        <h2 class=\"presenter-label\">Next Slide</h2>
+        <span class=\"presenter-label\">Next Slide</span>
         <div id=\"presenter-next-slide\">
         </div>
       </div>
      </div>
+     <div id=\"presenter-notes-container\"></div>
      <div id=\"presenter-times\" class=\"presenter-label\">
-       <div id=\"presenter-elapsed-time\"><h2>0:00:00</h2></div>
-       <div id=\"presenter-clock-time\"><h2></h2></div>
+       <div id=\"presenter-elapsed-time-container\">
+          <span id=\"presenter-elapsed-time\">0:00:00</span>
+          <span id=\"presenter-elapsed-time-reset-container\">
+            <a href=\"#\" id=\"presenter-elapsed-time-reset\">reset</a>
+          </span>
+       </div>
+       <div id=\"presenter-clock-time\"><span></span></div>
      </div>
   </body>
 </html>
@@ -454,28 +470,34 @@
 (defn update-presenter-clock-time [win]
   (let [elem (.. win -document
                  (getElementById "presenter-clock-time"))
-        now (js/Date.)]
+        now (js/Date.)
+        hours (. now (getHours))
+        display-hours (if (< 12 hours) (- hours 12) hours)]
     (set! (. elem -innerHTML)
           (goog.string.format
-           "<h2>%d:%02d:%02d %s</h2>"
-           (rem (. now (getHours)) 12)
+           "<span>%d:%02d:%02d<span id=\"presenter-clock-time-ampm\"> %s</span></span>"
+           display-hours
            (. now (getMinutes))
            (.. now (getSeconds))
-           (if (< 12 (. now (getHours)))
-             "PM" "AM")))))
+           (if (<= 12 hours)
+             "pm" "am")))))
+
+(defn elapsed-time-string []
+  (let [elapsed (- (.getTime (js/Date.)) @presenter-start-time)
+        secs (mod (/ elapsed 1000) 60)
+        mins (mod (/ elapsed (* 60 1000)) 60)
+        hours (/ elapsed (* 60 60 1000))]
+    (goog.string.format
+     "%d:%02d:%02d"
+     hours mins secs)))
 
 (defn update-presenter-elapsed-time [win]
-  (when @presenter-start-time
-   (let [elem (.. win -document
-                  (getElementById "presenter-elapsed-time"))
-         elapsed (- (.getTime (js/Date.)) @presenter-start-time)
-         secs (mod (/ elapsed 1000) 60)
-         mins (mod (/ elapsed (* 60 1000)) 60)
-         hours (/ elapsed (* 60 60 1000))]
-     (set! (. elem -innerHTML)
-           (goog.string.format
-            "<h2>%d:%02d:%02d</h2>"
-            hours mins secs)))))
+  (let [elem (.. win -document
+                 (getElementById "presenter-elapsed-time"))]
+    (set! (. elem -innerHTML)
+          (if @presenter-start-time
+            (elapsed-time-string)
+            "0:00:00")))  )
 
 (defn update-presenter-clock []
   (when-let [win (get-presenter-window)]
@@ -483,11 +505,20 @@
     (update-presenter-elapsed-time win)
     (. js/window (setTimeout update-presenter-clock 1000))))
 
+(defn reset-elapsed-time []
+  (reset! presenter-start-time nil)
+  (when-let [win (get-presenter-window)]
+    (update-presenter-elapsed-time win)))
+
 (defn show-presenter-slides []
   (when-let [win (get-presenter-window)]
-    (let [div (.. win -document
-                  (getElementById "presenter-current-slide"))]
-      (set! (. div -innerHTML) (:html (current-slide))))
+    (let [{:keys [html notes-html]} (current-slide)]
+      (let [div (.. win -document
+                    (getElementById "presenter-current-slide"))]
+        (set! (. div -innerHTML) html))
+      (let [div (.. win -document
+                    (getElementById "presenter-notes-container"))]
+        (set! (. div -innerHTML) notes-html)))
     (let [div (.. win -document
                   (getElementById "presenter-next-slide"))]
       (set! (. div -innerHTML) (:html (next-slide))))))
@@ -506,7 +537,11 @@
           (. doc (write presenter-display-html))
           (add-stylesheets (get @stylesheet-urls "common") doc)
           (add-stylesheets (get @stylesheet-urls "projection") doc)
-          (add-stylesheets (get @stylesheet-urls "presenter") doc))
+          (add-stylesheets (get @stylesheet-urls "presenter") doc)
+          (install-keyhandler doc)
+          (events/listen (.getElementById doc "presenter-elapsed-time-reset")
+                         goog.events.EventType.CLICK
+                         (fire-handler :reset-elapsed-time)))
         (show-presenter-slides)
         (update-presenter-clock))))
 
@@ -523,7 +558,8 @@
   (dispatch/react-to #{:show-control-panel} (fn [id _] (show-control-panel)))
   (dispatch/react-to #{:hide-control-panel} (fn [id _] (hide-control-panel)))
   (dispatch/react-to #{:change-mode} (fn [id _] (change-mode)))
-  (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window))))
+  (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window)))
+  (dispatch/react-to #{:reset-elapsed-time} (fn [id _] (reset-elapsed-time))))
 
 ;;; INITIAL SETUP
 
@@ -567,6 +603,6 @@
   (info "Installing key handler")
   (install-event-handlers)
   (install-control-panel)
-  (install-keyhandler))
+  (install-keyhandler (dom/getDocument)))
 
 (main)
