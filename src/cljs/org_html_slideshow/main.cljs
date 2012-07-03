@@ -378,7 +378,11 @@
 (defmethod update-bullets :colorize
   [state]
   (let [bullet (first (:animation-pending state))]
-    (d/add-class! bullet "colorize-highlight"))
+    (d/add-class! bullet "colorize-highlight")
+    ;; This is a bug workaround - remove-class! screws up the HTML
+    ;; when it removes the last class. So we add one that doesn't get
+    ;; removed.
+    (d/add-class! bullet "bugfix-leave-alone"))
   (doseq [bullet (:animation-done state)]
     (d/remove-class! bullet "colorize-highlight")))
 
