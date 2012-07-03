@@ -119,8 +119,14 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 * Animation                                            :animate:appear:slide:
 - Mark a slide with the =animated= tag
 - And an animation tag
-- Currently only =appear= is supported
+- Currently only =appear= and =colorize= is supported
   - Sub-bullets are animated, too
+
+* Animation                                          :animate:colorize:slide:
+- Here's an example of using the =colorize= animation
+  - Note that it also animates sub-bullets
+- Here's another bullet
+- You'll see that you can't animate backward
 
 * Placing Stylesheets/JavaScript                                      :slide:
 

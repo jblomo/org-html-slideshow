@@ -38,3 +38,7 @@ span.section-number-1,span.section-number-2,span.section-number-3,span.section-n
    background: blue;
    color: white;
 }
+
+.colorize-highlight { 
+    color: blue;
+}

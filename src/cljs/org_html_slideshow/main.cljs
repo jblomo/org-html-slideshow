@@ -295,17 +295,25 @@
 (defn next-slide []
   (find-slide-after (:id (current-slide))))
 
+(defn animation-style [e]
+  (when (and e (has-class? "animate" e))
+    (cond
+        (has-class? "appear" e) :appear
+        (has-class? "colorize" e) :colorize)))
+
 (defn show-slide [{:keys [id html]}]
   (info "Entering show-slide: " id)
   (set-location-fragment id)
   (let [slide (dom/getElement "current-slide")]
     (set! (.-innerHTML slide) html)
     (let [container (first (dom-tags "div" "slide" slide))
-          bullets (first (dom-tags "ul" nil container))]
-      (when (has-class? "animate" container)
+          bullets (first (dom-tags "ul" nil container))
+          animation-style (animation-style container)]
+      (when animation-style
         (reset! animation-state {:state :animating
-                                 :hidden (dom-tags "li" nil bullets)
-                                 :visible []}))))
+                                 :animation-pending (dom-tags "li" nil bullets)
+                                 :animation-done []
+                                 :animation-style animation-style}))))
   (show-presenter-slides))
 
 
@@ -341,18 +349,34 @@
   (swap! slideshow-mode? not))
 
 (defn animate [state]
-  (let [{:keys [hidden visible]} state
-        newly-visible (first hidden)]
-    {:state (if (next hidden) :animating :done)
-     :hidden (next hidden)
-     :visible (concat visible [newly-visible])}))
+  (let [{:keys [animation-pending animation-done]} state
+        next-to-animate (first animation-pending)]
+    (assoc state 
+      :state (if (next animation-pending) :animating :done)
+      :animation-pending (next animation-pending)
+      :animation-done (concat animation-done [next-to-animate]))))
+
+(defmulti update-bullets :animation-style)
+
+(defmethod update-bullets :appear
+  [state]
+  (doseq [bullet (:animation-pending state)]
+    (hide! bullet))
+  (doseq [bullet (:animation-done state)]
+    (show! bullet)))
+
+(defmethod update-bullets :colorize
+  [state]
+  (let [bullet (first (:animation-pending state))]
+    (d/add-class! bullet "colorize-highlight"))
+  (doseq [bullet (:animation-done state)]
+    (d/remove-class! bullet "colorize-highlight")))
+
+(defmethod update-bullets :default
+  [_])
 
 (add-watch animation-state :update-bullets
-           (fn [k r o n]
-             (doseq [bullet (:hidden n)]
-               (hide! bullet))
-             (doseq [bullet (:visible n)]
-               (show! bullet))))
+           (fn [k r o n] (update-bullets n)))
 
 (add-watch slideshow-mode? :change-mode
            (fn [k r o n]
@@ -364,7 +388,10 @@
     (if (= :animating (:state @animation-state))
       (swap! animation-state animate)
       (do
-        (when next (show-slide next))
+        (when next
+          (show-slide next)
+          ;;(reset! animation-state {})
+          )
         (swap! presenter-start-time (fn [t]
                                       (if (nil? t)
                                         (.getTime (js/Date.))

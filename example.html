@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="iso-8859-1"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
                "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <title>Example Presentation</title>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-1"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-02-23 11:12:18 EST"/>
+<meta name="generated" content="2012-07-03 15:26:13 EDT"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -117,23 +117,38 @@
 </ul></li>
 </ul>
 </li>
-<li><a href="#sec-2">2 Source Code</a>
+<li><a href="#sec-2">2 Presenter Notes</a>
 <ul>
-<li><a href="#sec-2-1">2.1 Syntax Highlighting</a></li>
+<li><a href="#sec-2-1">2.1 A Slide with Notes</a>
+<ul>
+<li><a href="#sec-2-1-1">2.1.1 Notes</a></li>
+</ul></li>
 </ul>
 </li>
-<li><a href="#sec-3">3 Images</a>
+<li><a href="#sec-3">3 Source Code</a>
 <ul>
-<li><a href="#sec-3-1">3.1 Slide with Image</a></li>
+<li><a href="#sec-3-1">3.1 Syntax Highlighting</a></li>
+<li><a href="#sec-3-2">3.2 Syntax Highlighting with CSS Classes</a></li>
 </ul>
 </li>
-<li><a href="#sec-4">4 Styling</a>
+<li><a href="#sec-4">4 Images</a>
 <ul>
-<li><a href="#sec-4-1">4.1 Org-Mode Tag as CSS Class</a></li>
+<li><a href="#sec-4-1">4.1 Slide with Image</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Animation</a></li>
-<li><a href="#sec-6">6 The End</a></li>
+<li><a href="#sec-5">5 Styling</a>
+<ul>
+<li><a href="#sec-5-1">5.1 Org-Mode Tag as CSS Class</a></li>
+</ul>
+</li>
+<li><a href="#sec-6">6 Animation</a></li>
+<li><a href="#sec-7">7 Animation</a></li>
+<li><a href="#sec-8">8 Placing Stylesheets/JavaScript</a>
+<ul>
+<li><a href="#sec-8-1">8.1 Warning About Hidden Headlines</a></li>
+<li><a href="#sec-8-2">8.2 The End</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -260,8 +275,63 @@ This slide is a <b>level-3</b> Org-Mode heading, inside the previous one.
 </div>
 
 <div id="outline-container-2" class="outline-2">
-<h2 id="sec-2"><span class="section-number-2">2</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<h2 id="sec-2"><span class="section-number-2">2</span> Presenter Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-2">
+
+
+<ul>
+<li>Slides can have presenter notes
+</li>
+<li>Add a sub-heading with the <code>:notes:</code> tag
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-2-1" class="outline-3">
+<h3 id="sec-2-1"><span class="section-number-3">2.1</span> A Slide with Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-2-1">
+
+
+<ul>
+<li>This slide has notes
+</li>
+<li>Notes are only visible to presenter
+</li>
+</ul>
+
+
+
+</div>
+
+<div id="outline-container-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1"><span class="section-number-4">2.1.1</span> Notes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h4>
+<div class="outline-text-4" id="text-2-1-1">
+
+
+<ul>
+<li>Presenter notes for this slide
+</li>
+<li>Not displayed as part of the slide
+</li>
+<li>Displayed in Presenter Preview window
+</li>
+<li>Only one <code>:notes:</code> section per slide allowed
+</li>
+</ul>
+
+
+</div>
+</div>
+</div>
+
+</div>
+
+<div id="outline-container-3" class="outline-2">
+<h2 id="sec-3"><span class="section-number-2">3</span> Source Code &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-3">
 
 
 <p>
@@ -278,19 +348,17 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 </div>
 
-<div id="outline-container-2-1" class="outline-3">
-<h3 id="sec-2-1"><span class="section-number-3">2.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-3-1" class="outline-3">
+<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Syntax Highlighting &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-3-1">
 
 
 <ul>
-<li>Org-Mode HTML export uses htmlize.el
+<li>Org-Mode HTML export uses <a href="http://www.emacswiki.org/emacs/Htmlize">htmlize.el</a>
 </li>
 <li>Code in exported HTML will match your current Emacs theme
 <ul>
-<li>Choose a theme that looks good on slides!
-</li>
-<li>Tip: launch Emacs with <code>-q</code> to skip your custom settings
+<li>Choose a theme that looks good on a projector!
 </li>
 </ul>
 
@@ -299,13 +367,48 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 </div>
+
+</div>
+
+<div id="outline-container-3-2" class="outline-3">
+<h3 id="sec-3-2"><span class="section-number-3">3.2</span> Syntax Highlighting with CSS Classes &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-3-2">
+
+
+<ul>
+<li>Set the Emacs variable 
+<ul>
+<li><code>org-export-htmlize-output-type</code> 
+</li>
+<li>to the symbol <code>css</code>
+</li>
+<li>(Does not work as a buffer-local variable)
+</li>
+</ul>
+
+</li>
+<li>Htmlize.el will add SPAN tags with CSS classes
+<ul>
+<li>Named for each font face, e.g. <code>org-comment</code>
+</li>
+</ul>
+
+</li>
+<li>Examine HTML output to see class names
+</li>
+<li>Add CSS styles to set colors
+</li>
+</ul>
+
+
+</div>
 </div>
 
 </div>
 
-<div id="outline-container-3" class="outline-2">
-<h2 id="sec-3"><span class="section-number-2">3</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-4" class="outline-2">
+<h2 id="sec-4"><span class="section-number-2">4</span> Images &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-4">
 
 
 <ul>
@@ -316,7 +419,7 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 </ul>
 
 </li>
-<li>See also these Emacs variables
+<li>See also these Emacs variables:
 <ul>
 <li><code>org-export-html-inline-images</code>
 </li>
@@ -338,9 +441,9 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 </div>
 
-<div id="outline-container-3-1" class="outline-3">
-<h3 id="sec-3-1"><span class="section-number-3">3.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-4-1" class="outline-3">
+<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Slide with Image &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-4-1">
 
 
 <p>
@@ -357,9 +460,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-4" class="outline-2">
-<h2 id="sec-4"><span class="section-number-2">4</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-5" class="outline-2">
+<h2 id="sec-5"><span class="section-number-2">5</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-5">
 
 
 <ul>
@@ -373,9 +476,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-4-1" class="outline-3">
-<h3 id="sec-4-1"><span class="section-number-3">4.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-5-1" class="outline-3">
+<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
+<div class="outline-text-3" id="text-5-1">
 
 
 <ul>
@@ -401,16 +504,16 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Animation &nbsp;&nbsp;&nbsp;<span class="tag"><span class="animate">animate</span>&nbsp;<span class="appear">appear</span>&nbsp;<span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Animation &nbsp;&nbsp;&nbsp;<span class="tag"><span class="animate">animate</span>&nbsp;<span class="appear">appear</span>&nbsp;<span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-6">
 
 <ul>
 <li>Mark a slide with the <code>animated</code> tag
 </li>
 <li>And an animation tag
 </li>
-<li>Currently only <code>appear</code> is supported
+<li>Currently only <code>appear</code> and <code>colorize</code> is supported
 <ul>
 <li>Sub-bullets are animated, too
 </li>
@@ -424,13 +527,75 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Animation &nbsp;&nbsp;&nbsp;<span class="tag"><span class="animate">animate</span>&nbsp;<span class="colorize">colorize</span>&nbsp;<span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-7">
+
+<ul>
+<li>Here's an example of using the <code>colorize</code> animation
+<ul>
+<li>Note that it also animates sub-bullets
+</li>
+</ul>
+
+</li>
+<li>Here's another bullet
+</li>
+<li>You'll see that you can't animate backward
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-8" class="outline-2">
+<h2 id="sec-8"><span class="section-number-2">8</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-8">
 
 
 <p>
 Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode file.
+</p>
+<p>
+They must go at the bottom because the Google Closure Library does not support an on-DOM-ready event. See the <a href="http://groups.google.com/group/closure-library-discuss/browse_thread/thread/1beecbb5d6afcb41/075c536259653946">Closure mailing list discussion</a> for an explanation.
+</p>
+
+</div>
+
+<div id="outline-container-8-1" class="outline-3">
+<h3 id="sec-8-1"><span class="section-number-3">8.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-8-1">
+
+
+<p>
+Stylesheets and JavaScript will <b>not</b> be loaded if the <b>last</b> headline in your Org-Mode file is hidden by any of:
+</p>
+<ul>
+<li><code>COMMENT</code> at the start of the heading
+</li>
+<li><code>#+COMMENT</code> at the start of the line
+</li>
+<li><code>:noexport:</code> tag, or missing <code>:export:</code> tag
+</li>
+</ul>
+
+
+<p>
+See <a href="http://orgmode.org/manual/Comment-lines.html">Comment lines</a> and <a href="http://orgmode.org/manual/Selective-export.html">Selective export</a> in the Org-Mode manual for details.
+</p>
+</div>
+
+</div>
+
+<div id="outline-container-8-2" class="outline-3">
+<h3 id="sec-8-2"><span class="section-number-3">8.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-8-2">
+
+
+<p>
+Sometimes it's safest to add an "empty" heading at the end of your document to make sure the stylesheets and JavaScript are included.
 </p>
 
 
@@ -441,9 +606,10 @@ Include the stylesheets and JavaScript at the <b>bottom</b> of your Org-Mode fil
 </div>
 </div>
 </div>
+</div>
 
 <div id="postamble">
-<p class="date">Date: 2012-02-23 11:12:18 EST</p>
+<p class="date">Date: 2012-07-03 15:26:13 EDT</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.03 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
