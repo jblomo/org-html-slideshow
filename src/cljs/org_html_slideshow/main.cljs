@@ -311,7 +311,7 @@
           animation-style (animation-style container)]
       (info "bullets on this page" bullets)
       (if (and bullets animation-style)
-        (let [items (mapcat #(dom-tags "li" nil %) bullets)]
+        (let [items (dom-tags "li" nil container)]
           (info "There are animation items on this page")
           (reset! animation-state {:state (if (seq items) :animating :done)
                                    :animation-pending items
