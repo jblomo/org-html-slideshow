@@ -307,11 +307,11 @@
   (let [slide (dom/getElement "current-slide")]
     (set! (.-innerHTML slide) html)
     (let [container (first (dom-tags "div" "slide" slide))
-          bullets (first (dom-tags "ul" nil container))
+          bullets (dom-tags "ul" nil container)
           animation-style (animation-style container)]
       (info "bullets on this page" bullets)
       (if (and bullets animation-style)
-        (let [items (dom-tags "li" nil bullets)]
+        (let [items (mapcat #(dom-tags "li" nil %) bullets)]
           (info "There are animation items on this page")
           (reset! animation-state {:state (if (seq items) :animating :done)
                                    :animation-pending items
