@@ -314,8 +314,9 @@
         (let [items (dom-tags "li" nil container)]
           (info "There are animation items on this page")
           (reset! animation-state {:state (if (seq items) :animating :done)
-                                   :animation-pending items
-                                   :animation-done []
+                                   :item-current nil
+                                   :items-pending items
+                                   :items-done []
                                    :animation-style animation-style})
           (info "animation state is now" @animation-state))
         ;; If there's no animation style, we might as well set the
@@ -358,32 +359,34 @@
   (swap! slideshow-mode? not))
 
 (defn animate [state]
-  (let [{:keys [animation-pending animation-done]} state
-        next-to-animate (first animation-pending)]
+  (let [{:keys [items-pending item-current items-done]} state]
     (info "entering animate with state " state)
     (assoc state 
-      :state (if (next animation-pending) :animating :done)
-      :animation-pending (next animation-pending)
-      :animation-done (concat animation-done [next-to-animate]))))
+      :state (if (next items-pending) :animating :done)
+      :item-current (first items-pending)
+      :items-pending (next items-pending)
+      :items-done (concat items-done [item-current]))))
 
 (defmulti update-bullets :animation-style)
 
 (defmethod update-bullets :appear
   [state]
-  (doseq [bullet (:animation-pending state)]
+  (doseq [bullet (:items-pending state)]
     (hide! bullet))
-  (doseq [bullet (:animation-done state)]
+  (when-let [current (:item-current state)]
+    (show! current))
+  (doseq [bullet (:items-done state)]
     (show! bullet)))
 
 (defmethod update-bullets :colorize
   [state]
-  (let [bullet (first (:animation-pending state))]
+  (when-let [bullet (:item-current state)]
     (d/add-class! bullet "colorize-highlight")
     ;; This is a bug workaround - remove-class! screws up the HTML
     ;; when it removes the last class. So we add one that doesn't get
     ;; removed.
     (d/add-class! bullet "bugfix-leave-alone"))
-  (doseq [bullet (:animation-done state)]
+  (doseq [bullet (:items-done state)]
     (d/remove-class! bullet "colorize-highlight")))
 
 (defmethod update-bullets :default
