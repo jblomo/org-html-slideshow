@@ -242,7 +242,7 @@
 (defn remove-nested-sections [slide-div-elem]
   (let [div (. slide-div-elem (cloneNode true))]
     (doseq [elem (dom-tags "div" nil div)]
-      (when (and (not )
+      (when (and #_(not ) ;; Stuart committed this (not); not sure what it was for
                  (some #(classes/has elem (str "outline-" %)) (range 1 9)))
         (remove-elem elem)))
     div))
