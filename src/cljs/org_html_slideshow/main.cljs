@@ -15,6 +15,7 @@
             [goog.Uri :as Uri]
             [goog.window :as window]
             [org-html-slideshow.dispatch :as dispatch]
+            [one.browser.history :as history]
             [domina :as d]))
 
 ;;; GLOBAL STATE
@@ -36,6 +37,9 @@
 
 (def presenter-start-time (atom nil))
 
+(def history (atom nil))
+
+(def slide-id (atom nil))
 
 ;;; UTILITIES
 
@@ -88,9 +92,7 @@
   (. (Uri/parse (. js/window -location)) (getFragment)))
 
 (defn set-location-fragment [fragment-id]
-  (let [uri (Uri/parse (. js/window -location))]
-    (. uri (setFragment fragment-id))
-    (set! (. js/window -location) (str uri))))
+  (history/set-token @history fragment-id))
 
 (defn fire-handler [event-id]
   (fn [goog-event]
@@ -329,7 +331,8 @@
   (show! (d/by-id "preamble"))
   (show! (d/by-id "content"))
   (show! (d/by-id "postamble"))
-  (. (dom/getElement (location-fragment)) (scrollIntoView)))
+  (when-let [loc-el (dom/getElement (location-fragment))]
+    (. loc-el (scrollIntoView))))
 
 (defn change-mode []
   (if @slideshow-mode?
@@ -561,6 +564,34 @@
   (dispatch/react-to #{:show-presenter-window} (fn [id _] (show-presenter-window)))
   (dispatch/react-to #{:reset-elapsed-time} (fn [id _] (reset-elapsed-time))))
 
+;;; HISTORY
+
+(defn history-handler [{:keys [token type navigation?] :as m}]
+  (info [:history-handler [:m m]])
+  (when navigation?
+    (if (= (name token) "")
+
+      (when @slideshow-mode?
+        (info [:history-handler :leave-slideshow-mode])
+        (reset! slide-id nil)
+        (toggle-mode))
+
+      (let [id (name token)
+            current-id @slide-id
+            {html :html} (slide-from-id id)]
+        (info [:history-handler :id id :current-id current-id])
+        (when-not @slideshow-mode?
+          (info [:history-handler :enter-slideshow-mode])
+          (toggle-mode))
+        (when-not (= id current-id)
+          (info [:history-handler :set-current-slide id])
+          (reset! slide-id id)
+          (set! (. (dom/getElement "current-slide") -innerHTML) html))
+        (show-presenter-slides)))))
+
+(defn install-history-handler []
+  (reset! history (history/history history-handler)))
+
 ;;; INITIAL SETUP
 
 (defn init-stylesheets []
@@ -613,6 +644,8 @@
   (info "Installing key handler")
   (install-event-handlers)
   (install-control-panel)
-  (install-keyhandler (dom/getDocument)))
+  (install-keyhandler (dom/getDocument))
+  (info "Installing history handler")
+  (install-history-handler))
 
 (main)
