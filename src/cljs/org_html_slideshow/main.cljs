@@ -14,8 +14,8 @@
             [goog.Timer :as Timer]
             [goog.Uri :as Uri]
             [goog.window :as window]
-            [org-html-slideshow.dispatch :as dispatch]
             [one.browser.history :as history]
+            [one.dispatch :as dispatch]
             [domina :as d]))
 
 ;;; GLOBAL STATE
