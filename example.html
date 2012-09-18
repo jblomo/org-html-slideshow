@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-03-12 19:11:09 EDT"/>
+<meta name="generated" content="2012-09-17 22:32:00 PDT"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -65,17 +65,19 @@
 <li><a href="#sec-4">4 Images</a>
 <ul>
 <li><a href="#sec-4-1">4.1 Slide with Image</a></li>
+<li><a href="#sec-4-2">4.2 Slide Image In First Column</a></li>
 </ul>
 </li>
-<li><a href="#sec-5">5 Styling</a>
+<li><a href="#sec-5">5 Tables</a></li>
+<li><a href="#sec-6">6 Styling</a>
 <ul>
-<li><a href="#sec-5-1">5.1 Org-Mode Tag as CSS Class</a></li>
+<li><a href="#sec-6-1">6.1 Org-Mode Tag as CSS Class</a></li>
 </ul>
 </li>
-<li><a href="#sec-6">6 Placing Stylesheets/JavaScript</a>
+<li><a href="#sec-7">7 Placing Stylesheets/JavaScript</a>
 <ul>
-<li><a href="#sec-6-1">6.1 Warning About Hidden Headlines</a></li>
-<li><a href="#sec-6-2">6.2 The End</a></li>
+<li><a href="#sec-7-1">7.1 Warning About Hidden Headlines</a></li>
+<li><a href="#sec-7-2">7.2 The End</a></li>
 </ul>
 </li>
 </ul>
@@ -269,8 +271,8 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 
-<pre class="src src-clojure">(<span style="color: #CDA869;">defn</span> <span style="color: #9B703F;">example</span> []
-  (<span style="color: #7587A6;">println</span> <span style="color: #8F9D6A;">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span style="font-weight: bold;">defn</span> <span style="font-weight: bold;">example</span> []
+  (<span style="font-weight: bold; font-style: italic;">println</span> <span style="font-style: italic;">"This is sample source code."</span>))
 </pre>
 
 
@@ -385,13 +387,64 @@ Make a <code>file:</code> link with the path to the image and no link text.
 This example image is public-domain <a href="http://openclipart.org/detail/165554/geodesic_dome-by-yoderj">clip art by Josiah / yoderj</a>.
 </p>
 </div>
+
+</div>
+
+<div id="outline-container-4-2" class="outline-3">
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Slide Image In First Column &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="two_col">two_col</span></span></h3>
+<div class="outline-text-3" id="text-4-2">
+
+
+<p>
+<img src="example-image.svg"  alt="example-image.svg" />
+</p>
+<ul>
+<li>Elements can be positioned on the page according to the slide's styling
+</li>
+<li>This example image is public-domain <a href="http://openclipart.org/detail/165554/geodesic_dome-by-yoderj">clip art by Josiah / yoderj</a>.
+</li>
+</ul>
+
+
+</div>
 </div>
 
 </div>
 
 <div id="outline-container-5" class="outline-2">
-<h2 id="sec-5"><span class="section-number-2">5</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<h2 id="sec-5"><span class="section-number-2">5</span> Tables &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
 <div class="outline-text-2" id="text-5">
+
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<caption>An example table</caption>
+<colgroup><col class="left" /><col class="right" />
+</colgroup>
+<thead>
+<tr><th scope="col" class="left">Type of Example</th><th scope="col" class="right">Number of examples</th></tr>
+</thead>
+<tbody>
+<tr><td class="left">Tables</td><td class="right">1</td></tr>
+<tr><td class="left">Images</td><td class="right">2</td></tr>
+<tr><td class="left">Styling</td><td class="right">1</td></tr>
+<tr><td class="left">Bullets</td><td class="right">21</td></tr>
+</tbody>
+</table>
+
+
+<ul>
+<li>Tables have some default styles
+</li>
+</ul>
+
+
+</div>
+
+</div>
+
+<div id="outline-container-6" class="outline-2">
+<h2 id="sec-6"><span class="section-number-2">6</span> Styling &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-6">
 
 
 <ul>
@@ -405,9 +458,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-5-1" class="outline-3">
-<h3 id="sec-5-1"><span class="section-number-3">5.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Org-Mode Tag as CSS Class &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="blue_background">blue_background</span></span></h3>
+<div class="outline-text-3" id="text-6-1">
 
 
 <ul>
@@ -433,9 +486,9 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 
 </div>
 
-<div id="outline-container-6" class="outline-2">
-<h2 id="sec-6"><span class="section-number-2">6</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-7" class="outline-2">
+<h2 id="sec-7"><span class="section-number-2">7</span> Placing Stylesheets/JavaScript &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h2>
+<div class="outline-text-2" id="text-7">
 
 
 <p>
@@ -447,9 +500,9 @@ They must go at the bottom because the Google Closure Library does not support a
 
 </div>
 
-<div id="outline-container-6-1" class="outline-3">
-<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-6-1">
+<div id="outline-container-7-1" class="outline-3">
+<h3 id="sec-7-1"><span class="section-number-3">7.1</span> Warning About Hidden Headlines &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-7-1">
 
 
 <p>
@@ -472,9 +525,9 @@ See <a href="http://orgmode.org/manual/Comment-lines.html">Comment lines</a> and
 
 </div>
 
-<div id="outline-container-6-2" class="outline-3">
-<h3 id="sec-6-2"><span class="section-number-3">6.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
-<div class="outline-text-3" id="text-6-2">
+<div id="outline-container-7-2" class="outline-3">
+<h3 id="sec-7-2"><span class="section-number-3">7.2</span> The End &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span></span></h3>
+<div class="outline-text-3" id="text-7-2">
 
 
 <p>
@@ -492,7 +545,7 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-03-12 19:11:09 EDT</p>
+<p class="date">Date: 2012-09-17 22:32:00 PDT</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

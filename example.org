@@ -104,6 +104,25 @@ Make a =file:= link with the path to the image and no link text.
 
 This example image is public-domain [[http://openclipart.org/detail/165554/geodesic_dome-by-yoderj][clip art by Josiah / yoderj]].
 
+** Slide Image In First Column                                   :slide:two_col:
+
+[[file:example-image.svg]]
+
+- Elements can be positioned on the page according to the slide's styling
+- This example image is public-domain [[http://openclipart.org/detail/165554/geodesic_dome-by-yoderj][clip art by Josiah / yoderj]].
+
+* Tables                                                              :slide:
+
+#+CAPTION: An example table
+| Type of Example                        | Number of examples | 
+|----------------------------------------+--------------------| 
+| Tables                                 | 1                  | 
+| Images                                 | 2                  | 
+| Styling                                | 1                  | 
+| Bullets                                | 21                 | 
+
+- Tables have some default styles
+
 * Styling                                                             :slide:
 
 - Use CSS styles to control appearance of slides
