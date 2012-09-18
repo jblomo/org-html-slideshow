@@ -104,7 +104,7 @@ Make a =file:= link with the path to the image and no link text.
 
 This example image is public-domain [[http://openclipart.org/detail/165554/geodesic_dome-by-yoderj][clip art by Josiah / yoderj]].
 
-** Slide Image In First Column                                   :slide:two_col:
+** Image In First Column                                      :slide:two_col:
 
 [[file:example-image.svg]]
 
@@ -122,6 +122,12 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 | Bullets                                | 21                 | 
 
 - Tables have some default styles
+
+* Animation                                            :animate:appear:slide:
+- Mark a slide with the =animated= tag
+- And an animation tag
+- Currently only =appear= is supported
+  - Sub-bullets are animated, too
 
 * Styling                                                             :slide:
 

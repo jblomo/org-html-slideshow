@@ -30,6 +30,8 @@
 
 (def slideshow-mode? (atom false))
 
+(def animation-state (atom {}))
+
 (def presenter-window (atom nil))
 
 (def presenter-start-time (atom nil))
@@ -40,13 +42,28 @@
 (defn info [& msgs]
   (.info (Logger/getLogger "org_html_slideshow.main") (apply pr-str msgs)))
 
+(defn space-pad [s]
+  (str " " s " "))
+
+(defn has-class? [selector element]
+  (let [elem-classes (.-className element)
+        elem-classes (.replace elem-classes (js/RegExp. "[\\r\\n\\t]" "g") " ")]
+    (< -1 (.indexOf (space-pad elem-classes)
+                    (space-pad selector)))))
+
 (defn dom-tags
   ([tag-name]
-     (array/toArray (dom/getElementsByTagNameAndClass tag-name)))
+     (to-array (dom/getElementsByTagNameAndClass tag-name)))
   ([tag-name class-name]
-     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name)))
+     (to-array
+      (filter #(= (.-tagName %) (.toUpperCase tag-name ()))
+              (dom/getElementsByClass class-name))))
   ([tag-name class-name inside-elem]
-     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name inside-elem))))
+     (to-array
+      (filter #(= (.-tagName %) (.toUpperCase tag-name ()))
+              (if class-name
+                (dom/getElementsByClass class-name inside-elem)
+                (dom/getElementsByTagNameAndClass tag-name nil inside-elem))))))
 
 (defn remove-elem
   "Remove a node from the DOM tree."
@@ -279,8 +296,16 @@
   (find-slide-after (:id (current-slide))))
 
 (defn show-slide [{:keys [id html]}]
+  (info "Entering show-slide: " id)
   (set-location-fragment id)
-  (set! (. (dom/getElement "current-slide") -innerHTML) html)
+  (let [slide (dom/getElement "current-slide")]
+    (set! (.-innerHTML slide) html)
+    (let [container (first (dom-tags "div" "slide" slide))
+          bullets (first (dom-tags "ul" nil container))]
+      (when (has-class? "animate" container)
+        (reset! animation-state {:state :animating
+                                 :hidden (dom-tags "li" nil bullets)
+                                 :visible []}))))
   (show-presenter-slides))
 
 
@@ -315,6 +340,20 @@
   (info '(toggle-mode))
   (swap! slideshow-mode? not))
 
+(defn animate [state]
+  (let [{:keys [hidden visible]} state
+        newly-visible (first hidden)]
+    {:state (if (next hidden) :animating :done)
+     :hidden (next hidden)
+     :visible (concat visible [newly-visible])}))
+
+(add-watch animation-state :update-bullets
+           (fn [k r o n]
+             (doseq [bullet (:hidden n)]
+               (hide! bullet))
+             (doseq [bullet (:visible n)]
+               (show! bullet))))
+
 (add-watch slideshow-mode? :change-mode
            (fn [k r o n]
              (dispatch/fire :change-mode)))
@@ -322,15 +361,19 @@
 (defn show-next-slide []
   (let [current (current-slide)
         next (second (drop-while #(not= current %) @slides))]
-    (when next (show-slide next))
-    (swap! presenter-start-time (fn [t]
-                                  (if (nil? t)
-                                    (.getTime (js/Date.))
-                                    t)))))
+    (if (= :animating (:state @animation-state))
+      (swap! animation-state animate)
+      (do
+        (when next (show-slide next))
+        (swap! presenter-start-time (fn [t]
+                                      (if (nil? t)
+                                        (.getTime (js/Date.))
+                                        t)))))))
 
 (defn show-prev-slide []
   (let [current (current-slide)
         prev (last (take-while #(not= current %) @slides))]
+    (reset! animation-state {:state :done})
     (when prev (show-slide prev))))
 
 (defn show-first-slide []
@@ -357,7 +400,7 @@
    goog.events.KeyCodes.END :show-last-slide
 
    goog.events.KeyCodes.SPACE :show-next-slide
-   goog.events.KeyCodes.ENTER :show-next-slide        
+   goog.events.KeyCodes.ENTER :show-next-slide
    goog.events.KeyCodes.MAC_ENTER :show-next-slide
    goog.events.KeyCodes.RIGHT :show-next-slide
    goog.events.KeyCodes.DOWN :show-next-slide
