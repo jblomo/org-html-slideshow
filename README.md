@@ -71,7 +71,7 @@ Additional tags will be added as CSS classes on the slides.
 Read more about [tags](http://orgmode.org/manual/Tags.html)
 in the Org-Mode manual.
 
-See the files `example.org` and `example.html` for more examples of
+See the files `index.org` and `index.html` for more examples of
 things you can do with Org-Mode.
 
 
@@ -118,6 +118,13 @@ heading. The content under the notes heading will be displayed in the
 Presenter Preview window with the slide.
 
 
+Animation
+--------------------
+
+Animating within a slide can be done by adding the `:animate:` tag to a slide.
+Incremental reveal of lists are currently supported.
+
+
 Changing Styles
 --------------------
 
@@ -151,38 +158,21 @@ to download additional dependencies:
     lein deps
 
 
-Rebuilding Development Examples
+Rebuilding Javascript Files
 -------------------------------
 
-Launch a Clojure REPL with:
+Use lein-cljsbuild:
 
-    lein repl
+    lein cljsbuild once
 
-Then run the build with:
-
-    (use 'build)
-    (build :development)
+This will build both development and production version of `org-html-slideshow.js`
 
 You will need [Emacs](http://www.gnu.org/software/emacs/) (version 23+ recommended) and
 [org-mode](http://orgmode.org/) (version 7+ recommended) to generate the HTML.
 
-Open `example.org` in Emacs and type `C-c C-e b`.  Emacs will generate
+Open `index.org` in Emacs and type `C-c C-e b`.  Emacs will generate
 an HTML file and open it in your default browser. Type `t` to begin
 the slide show.
-
-
-Rebuilding Production Files
----------------------------
-
-Launch a Clojure REPL with:
-
-    lein repl
-
-Then run the build with:
-
-    (use 'build)
-    (build :production)
-
 
 
 TODO
@@ -195,7 +185,6 @@ TODO
 * Jump to slide from a list
 * Link visible in original document to begin slide show?
 * Slide transitions?
-* Animation?
 
 
 
@@ -212,3 +201,5 @@ Contributors
 * Stuart Sierra (primary author)
 * Craig Andera
 * Alex Redington
+* @fredericksgary
+* Jim Blomo
