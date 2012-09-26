@@ -57,17 +57,11 @@
 
 (defn dom-tags
   ([tag-name]
-     (to-array (dom/getElementsByTagNameAndClass tag-name)))
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name)))
   ([tag-name class-name]
-     (to-array
-      (filter #(= (.-tagName %) (.toUpperCase tag-name ()))
-              (dom/getElementsByClass class-name))))
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name)))
   ([tag-name class-name inside-elem]
-     (to-array
-      (filter #(= (.-tagName %) (.toUpperCase tag-name ()))
-              (if class-name
-                (dom/getElementsByClass class-name inside-elem)
-                (dom/getElementsByTagNameAndClass tag-name nil inside-elem))))))
+     (array/toArray (dom/getElementsByTagNameAndClass tag-name class-name inside-elem))))
 
 (defn remove-elem
   "Remove a node from the DOM tree."

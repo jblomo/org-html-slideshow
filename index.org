@@ -129,6 +129,10 @@ This example image is public-domain [[http://openclipart.org/detail/165554/geode
 - Currently only =appear= is supported
   - Sub-bullets are animated, too
 
+** Todos                                                              :notes:
+
+- Perhaps should work with each element?
+
 * Styling                                                             :slide:
 
 - Use CSS styles to control appearance of slides
@@ -163,10 +167,10 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 
 #+TAGS: slide(s)
 
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/common.css" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
-#+STYLE: <link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="production/common.css" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="production/screen.css" media="screen" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="production/projection.css" media="projection" />
+#+STYLE: <link rel="stylesheet" type="text/css" href="production/presenter.css" media="presenter" />
 
 #+BEGIN_HTML
 <script type="text/javascript" src="production/org-html-slideshow.js"></script>

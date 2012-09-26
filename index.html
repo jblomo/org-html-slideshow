@@ -7,15 +7,15 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Example Presentation"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2012-09-18 00:16:02 PDT"/>
+<meta name="generated" content="2012-09-25 22:01:11 PDT"/>
 <meta name="author" content="Stuart Sierra"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
 
-<link rel="stylesheet" type="text/css" href="src/css/common.css" />
-<link rel="stylesheet" type="text/css" href="src/css/screen.css" media="screen" />
-<link rel="stylesheet" type="text/css" href="src/css/projection.css" media="projection" />
-<link rel="stylesheet" type="text/css" href="src/css/presenter.css" media="presenter" />
+<link rel="stylesheet" type="text/css" href="production/common.css" />
+<link rel="stylesheet" type="text/css" href="production/screen.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="production/projection.css" media="projection" />
+<link rel="stylesheet" type="text/css" href="production/presenter.css" media="presenter" />
 
 
 </head>
@@ -65,11 +65,15 @@
 <li><a href="#sec-4">4 Images</a>
 <ul>
 <li><a href="#sec-4-1">4.1 Slide with Image</a></li>
-<li><a href="#sec-4-2">4.2 Slide Image In First Column</a></li>
+<li><a href="#sec-4-2">4.2 Image In First Column</a></li>
 </ul>
 </li>
 <li><a href="#sec-5">5 Tables</a></li>
-<li><a href="#sec-6">6 Animation</a></li>
+<li><a href="#sec-6">6 Animation</a>
+<ul>
+<li><a href="#sec-6-1">6.1 Todos</a></li>
+</ul>
+</li>
 <li><a href="#sec-7">7 Styling</a>
 <ul>
 <li><a href="#sec-7-1">7.1 Org-Mode Tag as CSS Class</a></li>
@@ -272,8 +276,8 @@ Use <code>begin_src/end_src</code> blocks to include source code.
 
 
 
-<pre class="src src-clojure">(<span style="font-weight: bold;">defn</span> <span style="font-weight: bold;">example</span> []
-  (<span style="font-weight: bold; font-style: italic;">println</span> <span style="font-style: italic;">"This is sample source code."</span>))
+<pre class="src src-clojure">(<span style="color: #a020f0;">defn</span> <span style="color: #0000ff;">example</span> []
+  (<span style="color: #a0522d;">println</span> <span style="color: #8b2252;">"This is sample source code."</span>))
 </pre>
 
 
@@ -392,7 +396,7 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 </div>
 
 <div id="outline-container-4-2" class="outline-3">
-<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Slide Image In First Column &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="two_col">two_col</span></span></h3>
+<h3 id="sec-4-2"><span class="section-number-3">4.2</span> Image In First Column &nbsp;&nbsp;&nbsp;<span class="tag"><span class="slide">slide</span>&nbsp;<span class="two_col">two_col</span></span></h3>
 <div class="outline-text-3" id="text-4-2">
 
 
@@ -462,6 +466,21 @@ This example image is public-domain <a href="http://openclipart.org/detail/16555
 </ul>
 
 
+
+</div>
+
+<div id="outline-container-6-1" class="outline-3">
+<h3 id="sec-6-1"><span class="section-number-3">6.1</span> Todos &nbsp;&nbsp;&nbsp;<span class="tag"><span class="notes">notes</span></span></h3>
+<div class="outline-text-3" id="text-6-1">
+
+
+<ul>
+<li>Perhaps should work with each element?
+</li>
+</ul>
+
+
+</div>
 </div>
 
 </div>
@@ -569,7 +588,7 @@ Sometimes it's safest to add an "empty" heading at the end of your document to m
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2012-09-18 00:16:02 PDT</p>
+<p class="date">Date: 2012-09-25 22:01:11 PDT</p>
 <p class="author">Author: Stuart Sierra</p>
 <p class="creator">Org version 7.8.02 with Emacs version 23</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>

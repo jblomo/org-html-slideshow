@@ -48,6 +48,6 @@ span.section-number-1,span.section-number-2,span.section-number-3,span.section-n
 }
 
 .blue_background {
-   background: blue;
-   color: white;
+   background-color: #05565E;
+   color: rgba(255, 255, 255, 0.8);
 }
