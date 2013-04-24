@@ -147,6 +147,7 @@ programs already installed:
 In the top-level directory of this project, run the following commands
 to download additional dependencies:
 
+    git submodule init
     git submodule update
     lein deps
 
