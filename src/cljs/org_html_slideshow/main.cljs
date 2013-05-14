@@ -391,27 +391,29 @@
    goog.events.KeyCodes.HOME :go-to-top})
 
 (def slideshow-keymap
-  {goog.events.KeyCodes.T :toggle-mode
+  {goog.events.KeyCodes.T         :toggle-mode
 
-   goog.events.KeyCodes.HOME :show-first-slide
-   goog.events.KeyCodes.END :show-last-slide
+   goog.events.KeyCodes.HOME      :show-first-slide
+   goog.events.KeyCodes.END       :show-last-slide
 
-   goog.events.KeyCodes.SPACE :show-next-slide
-   goog.events.KeyCodes.ENTER :show-next-slide
+   goog.events.KeyCodes.SPACE     :show-next-slide
+   goog.events.KeyCodes.ENTER     :show-next-slide
    goog.events.KeyCodes.MAC_ENTER :show-next-slide
-   goog.events.KeyCodes.RIGHT :show-next-slide
-   goog.events.KeyCodes.DOWN :show-next-slide
+   goog.events.KeyCodes.RIGHT     :show-next-slide
+   goog.events.KeyCodes.DOWN      :show-next-slide
    goog.events.KeyCodes.PAGE_DOWN :show-next-slide
-   goog.events.KeyCodes.N :show-next-slide
+   goog.events.KeyCodes.N         :show-next-slide
 
-   goog.events.KeyCodes.LEFT :show-prev-slide
-   goog.events.KeyCodes.UP :show-prev-slide
-   goog.events.KeyCodes.PAGE_UP :show-prev-slide
-   goog.events.KeyCodes.P :show-prev-slide})
+   goog.events.KeyCodes.LEFT      :show-prev-slide
+   goog.events.KeyCodes.UP        :show-prev-slide
+   goog.events.KeyCodes.PAGE_UP   :show-prev-slide
+   goog.events.KeyCodes.P         :show-prev-slide
+
+   goog.events.KeyCodes.O         :show-presenter-window})
 
 (defn handle-key [event]
-  (let [code (. event -keyCode)
-        keymap (if @slideshow-mode? slideshow-keymap normal-keymap)
+  (let [code     (. event -keyCode)
+        keymap   (if @slideshow-mode? slideshow-keymap normal-keymap)
         event-id (get keymap code)]
     (when event-id
       (dispatch/fire event-id)
